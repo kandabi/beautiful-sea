@@ -22,35 +22,34 @@ const scene = new THREE.Scene();
  * Water
  */
 // Geometry
-const waterGeometry = new THREE.PlaneGeometry(12, 12, 1024, 1024);
+const waterGeometry = new THREE.PlaneGeometry(8, 8, 256, 256);
 
 const colors = {
-    backgroundColor: 0x6695b2,
-    surfaceColor: 0x9bd8ff,
-    depthColor: 0x186691,
+    backgroundColor: 0x5574a5,
+    surfaceColor: 0x84b6dc,
+    depthColor: 0x5683bd,
 };
 
 // Material
 const waterMaterial = new THREE.ShaderMaterial({
     fragmentShader: waterFragmentShader,
     vertexShader: waterVertexShader,
-    side: THREE.DoubleSide,
     uniforms: {
         uTime: { value: 0.0 },
 
-        uBigWaveSpeed: { value: 0.75 },
-        uBigWaveElevation: { value: 0.2 },
-        uBigWaveFrequency: { value: new THREE.Vector2(4, 1.5) },
+        uBigWaveSpeed: { value: 1 },
+        uBigWaveElevation: { value: 0.16 },
+        uBigWaveFrequency: { value: new THREE.Vector2(2, 2.1) },
 
-        uSmallWaveIteration: { value: 4 },
-        uSmallWaveFrequency: { value: 3.0 },
+        uSmallWaveIteration: { value: 2 },
+        uSmallWaveFrequency: { value: 2.0 },
         uSmallWaveSpeed: { value: 0.2 },
         uSmallWaveElevation: { value: 0.15 },
 
         uDepthColor: { value: new THREE.Color(colors.depthColor) },
         uSurfaceColor: { value: new THREE.Color(colors.surfaceColor) },
-        uColorOffset: { value: 0.08 },
-        uColorMultiply: { value: 5 },
+        uColorOffset: { value: 0.12 },
+        uColorMultiply: { value: 4.5 },
     },
 });
 
@@ -76,7 +75,6 @@ gui.add(waterMaterial.uniforms.uColorMultiply, 'value', 0, 10, 0.01).name('Color
 gui.add(waterMaterial.uniforms.uSmallWaveIteration, 'value', 1, 4, 1).name('Small Wave Detail');
 gui.add(waterMaterial.uniforms.uSmallWaveFrequency, 'value', 1, 6, 0.01).name('Small Wave Frequency');
 gui.add(waterMaterial.uniforms.uSmallWaveSpeed, 'value', 0, 0.6, 0.01).name('Small Wave Speed');
-gui.add(waterMaterial.uniforms.uSmallWaveElevation, 'value', 0, 0.3, 0.01).name('Small Wave Elevation');
 gui.add(waterMaterial.uniforms.uSmallWaveElevation, 'value', 0, 0.3, 0.01).name('Small Wave Elevation');
 
 gui.addColor(colors, 'backgroundColor')
@@ -116,8 +114,13 @@ window.addEventListener('resize', () => {
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
-camera.position.set(1, 1, 1);
+var camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+camera.position.set(0.2, 0.5, 1.5);
+
+gui.close();
+
+// gui.add
+
 scene.add(camera);
 
 // Controls
@@ -145,6 +148,9 @@ const tick = () => {
     const elapsedTime = clock.getElapsedTime();
 
     waterMaterial.uniforms.uTime.value = elapsedTime;
+
+    camera.position.y = Math.sin(elapsedTime) * 0.2 + 0.5;
+    camera.position.x = Math.sin(elapsedTime) * 0.15;
 
     // Update controls
     controls.update();
