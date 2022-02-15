@@ -1,14 +1,8 @@
 uniform float uTime;
-uniform float uBigWaveSpeed;
-uniform float uBigWaveElevation;
-uniform vec2 uBigWaveCount;
+uniform float uStarSpeed;
+uniform float uStarNoise;
 
-uniform float uSmallWaveIteration;
-uniform float uSmallWaveCount;
-uniform float uSmallWaveSpeed;
-uniform float uSmallWaveElevation;
-
-varying float vElevation;
+varying float vNoise;
 varying vec2 vUv;
 
 //*** Classic Perlin 3D Noise by Stefan Gustavson
@@ -95,25 +89,9 @@ float cnoise(vec3 P) {
 
 void main() {
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-
-  float elevation =
-      sin(modelPosition.x * uBigWaveCount.x - uTime * uBigWaveSpeed) *
-      sin(modelPosition.z * uBigWaveCount.y - uTime * uBigWaveSpeed);
-
-  sin(modelPosition.z * uBigWaveCount.y + uTime * uBigWaveSpeed);
-
-  elevation *= uBigWaveElevation;
-  for (float i = 1.0; i <= uSmallWaveIteration; i++) {
-    float noise = cnoise(
-        vec3(modelPosition.xz * uSmallWaveCount * i, uTime * uSmallWaveSpeed));
-    elevation -= abs(noise * uSmallWaveElevation / i);
-  }
-
-  modelPosition.y += elevation;
-
   vec4 viewPosition = viewMatrix * modelPosition;
   vec4 projectedPosition = projectionMatrix * viewPosition;
   gl_Position = projectedPosition;
-  vElevation = elevation;
+  vNoise = cnoise(vec3(uv * uStarNoise, uTime * uStarSpeed) * 4.0);
   vUv = uv;
 }
