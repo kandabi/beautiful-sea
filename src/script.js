@@ -27,7 +27,6 @@ scene.background = new THREE.Color(colors.backgroundColor);
 
 const waterGeometry = new THREE.PlaneGeometry(12, 12, 256, 256);
 const skyGeometry = new THREE.PlaneGeometry(128, 128, 64, 64);
-// const skyGeometry = new THREE.PlaneGeometry(128, 128, 128, 128);
 
 const waterMaterial = new THREE.ShaderMaterial({
     fragmentShader: waterFragmentShader,
@@ -61,9 +60,9 @@ const skyMaterial = new THREE.ShaderMaterial({
     transparent: true,
     uniforms: {
         uTime: { value: 0.0 },
-        uStarIntensity: { value: 0.05 },
+        uStarIntensity: { value: 0.08 },
         uStarSpeed: { value: 0.05 },
-        uStarNoise: { value: 1.25 },
+        uStarNoise: { value: 20 },
 
         uSkyDarkColor: { value: new THREE.Color(colors.darkSkyColor) },
         uSkyLightColor: { value: new THREE.Color(colors.lightSkyColor) },
@@ -75,7 +74,7 @@ const sky = new THREE.Mesh(skyGeometry, skyMaterial);
 water.rotation.x = -Math.PI * 0.5;
 sky.rotation.x = -Math.PI * 0.5;
 sky.rotation.y = Math.PI;
-sky.position.y = 6.5;
+sky.position.y = 5.5;
 scene.add(water);
 scene.add(sky);
 
@@ -95,14 +94,14 @@ window.addEventListener('resize', () => {
     renderer.setSize(sizes.width, sizes.height);
 });
 
-var camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100);
+var camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.01, 65);
 camera.position.set(0.2, 0.5, 1.5);
 scene.add(camera);
 
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true;
-controls.enablePan = false;
 controls.enableZoom = false;
+controls.enablePan = false;
 
 controls.maxPolarAngle = Math.PI / 2.2;
 controls.minPolarAngle = Math.PI / 8;
@@ -170,7 +169,7 @@ seaFolder
 const skyFolder = gui.addFolder('Sky');
 skyFolder.add(skyMaterial.uniforms.uStarSpeed, 'value', 0, 0.3, 0.001).name('Star Speed');
 skyFolder.add(skyMaterial.uniforms.uStarIntensity, 'value', 0.001, 0.5, 0.01).name('Star Intensity');
-skyFolder.add(skyMaterial.uniforms.uStarNoise, 'value', 0, 15, 0.01).name('Star Noise');
+skyFolder.add(skyMaterial.uniforms.uStarNoise, 'value', 0, 50, 0.01).name('Star Noise ');
 
 skyFolder
     .addColor(colors, 'darkSkyColor')
