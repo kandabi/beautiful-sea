@@ -1,7 +1,10 @@
 uniform float uTime;
 uniform float uStarSpeed;
-uniform float uStarNoise;
 uniform float uStarIntensity;
+uniform float uStarNoiseCount;
+uniform float uStarNoiseIntensity;
+
+uniform float uSkyColorMultiply;
 uniform vec3 uSkyDarkColor;
 uniform vec3 uSkyLightColor;
 
@@ -95,16 +98,18 @@ float cnoise(vec3 P) {
 }
 
 void main() {
-  vec2 starUvs = mod(vec2(vUv.x, vUv.y) * 35.0, 1.0);
+  vec2 starUvs = mod(vec2(vUv.x, vUv.y) * 20.0, 1.0);
   float stars =
       createCircle(starUvs.x, starUvs.y) * createCircle(starUvs.y, starUvs.x);
-  float noise = cnoise(vec3(vUv * uStarNoise, uTime * uStarSpeed));
-  stars *= abs((noise - 0.1) * 0.8);
+  float noise = abs(cnoise(vec3(vUv * uStarNoiseCount, uTime * uStarSpeed))) *
+                uStarNoiseIntensity;
+  float sky = clamp((uSkyColorMultiply - abs(vUv.x - 0.5)) +
+                        (uSkyColorMultiply - abs(vUv.y - 0.5)),
+                    0.0, 1.0);
 
-  float sky =
-      clamp((0.3 - abs(vUv.x - 0.5)) + (0.3 - abs(vUv.y - 0.5)), 0.0, 1.0);
-  sky += stars;
-  vec3 finalColor = mix(uSkyDarkColor, uSkyLightColor, sky * 3.0);
+  stars *= noise;
+  sky += stars * 3.0;
+  vec3 finalColor = mix(uSkyDarkColor, uSkyLightColor, sky);
 
   gl_FragColor = vec4(finalColor, 1.0);
 }

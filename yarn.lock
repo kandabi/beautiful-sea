@@ -939,6 +939,13 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
+"@ocio/three-camera-utils@^2.5.2":
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/@ocio/three-camera-utils/-/three-camera-utils-2.5.2.tgz#0192b877481a62c744419bf101964865540290aa"
+  integrity sha512-EmfjMuvsWQv9KTsbx1OVusRN0hwVyN4lBZToxFn/6OYiXBeCxGU1JLHioDepC9F0tKRUbn/uSKaN4wB69hFSzw==
+  dependencies:
+    three "^0.115.0"
+
 "@types/body-parser@*":
   version "1.19.2"
   resolved "https://registry.yarnpkg.com/@types/body-parser/-/body-parser-1.19.2.tgz#aea2059e28b7658639081347ac4fab3de166e6f0"
@@ -1762,6 +1769,11 @@ cssesc@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/cssesc/-/cssesc-3.0.0.tgz#37741919903b868565e1c09ea747445cd18983ee"
   integrity sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==
+
+dat.gui@^0.7.7:
+  version "0.7.7"
+  resolved "https://registry.yarnpkg.com/dat.gui/-/dat.gui-0.7.7.tgz#7f96dbd21621a76385203659aebfa264ee6ae89b"
+  integrity sha512-sRl/28gF/XRC5ywC9I4zriATTsQcpSsRG7seXCPnTkK8/EQMIbCu5NPMpICLGxX9ZEUvcXR3ArLYCtgreFoMDw==
 
 debug@2.6.9:
   version "2.6.9"
@@ -2697,11 +2709,6 @@ kind-of@^6.0.2:
   version "6.0.3"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-6.0.3.tgz#07c05034a6c349fa06e24fa35aa76db4580ce4dd"
   integrity sha512-dcS1ul+9tmeD95T+x28/ehLgd9mENa3LsvDTtzm3vyBEO7RPptvAD+t44WVXaUjTBRcrpFeFlC8WCruUR456hw==
-
-lil-gui@^0.16.0:
-  version "0.16.1"
-  resolved "https://registry.yarnpkg.com/lil-gui/-/lil-gui-0.16.1.tgz#fe3a7eb20eea3fa6bc752b8caae96f2a385e8323"
-  integrity sha512-6wnnfBvQxJYRhdLyIA+w5b8utwbuVxNmtpTXElm36OSgHa8lyKp00Xz/4AEx3kvodT0AJYgbfadCFWAM0Q8DgQ==
 
 loader-runner@^4.2.0:
   version "4.2.0"
@@ -3672,6 +3679,11 @@ spdy@^4.0.2:
     select-hose "^2.0.0"
     spdy-transport "^3.0.0"
 
+stats.js@^0.17.0:
+  version "0.17.0"
+  resolved "https://registry.yarnpkg.com/stats.js/-/stats.js-0.17.0.tgz#b1c3dc46d94498b578b7fd3985b81ace7131cc7d"
+  integrity sha1-scPcRtlEmLV4t/05hbgaznExzH0=
+
 "statuses@>= 1.4.0 < 2", "statuses@>= 1.5.0 < 2", statuses@~1.5.0:
   version "1.5.0"
   resolved "https://registry.yarnpkg.com/statuses/-/statuses-1.5.0.tgz#161c7dac177659fd9811f43771fa99381478628c"
@@ -3758,6 +3770,16 @@ terser@^5.10.0, terser@^5.7.2:
     commander "^2.20.0"
     source-map "~0.7.2"
     source-map-support "~0.5.20"
+
+three-dat.gui@^2.0.7:
+  version "2.0.7"
+  resolved "https://registry.yarnpkg.com/three-dat.gui/-/three-dat.gui-2.0.7.tgz#9f2fc7dadebad99b335da660e33c3562dd10c80d"
+  integrity sha512-u+uRJF3BxY6O1JnRwjGVNdBvvmyaHG5/92RrvILtZclblAUda0ZcfUOXwWbr+hzPZYgJT5HykayjSyATdBQvUw==
+
+three@^0.115.0:
+  version "0.115.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.115.0.tgz#540d800c381b9da2334c024f0fbe4d23f84eb05e"
+  integrity sha512-mAV2Ky3RdcbdSbR9capI+tKLvRldWYxd4151PZTT/o7+U2jh9Is3a4KmnYwzyUAhB2ZA3pXSgCd2DOY4Tj5kow==
 
 three@^0.137.5:
   version "0.137.5"

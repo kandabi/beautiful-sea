@@ -11,6 +11,8 @@ uniform float uSmallWaveElevation;
 varying float vElevation;
 varying vec2 vUv;
 
+const float WAVE_DETAIL = 2.0;
+
 //*** Classic Perlin 3D Noise by Stefan Gustavson
 vec4 permute(vec4 x) {
   return mod(((x * 34.0) + 1.0) * x, 289.0);
@@ -95,15 +97,13 @@ float cnoise(vec3 P) {
 
 void main() {
   vec4 modelPosition = modelMatrix * vec4(position, 1.0);
-
   float elevation =
       sin(modelPosition.x * uBigWaveCount.x - uTime * uBigWaveSpeed) *
       sin(modelPosition.z * uBigWaveCount.y - uTime * uBigWaveSpeed);
 
-  sin(modelPosition.z * uBigWaveCount.y + uTime * uBigWaveSpeed);
-
   elevation *= uBigWaveElevation;
-  for (float i = 1.0; i <= uSmallWaveIteration; i++) {
+
+  for (float i = 1.0; i <= WAVE_DETAIL; i++) {
     float noise = cnoise(
         vec3(modelPosition.xz * uSmallWaveCount * i, uTime * uSmallWaveSpeed));
     elevation -= abs(noise * uSmallWaveElevation / i);
