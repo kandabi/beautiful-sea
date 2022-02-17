@@ -2,7 +2,7 @@ import * as THREE from 'three';
 
 import { createWaterMaterial, createSkyMaterial } from './shaders';
 import { createFpsGui, createModelGui, createMaterialGui, createCameraGui } from './utils';
-import { colors, sizes, resizeListener } from './utils';
+import { colors, sizes, resizeListener, setupAudio } from './utils';
 import { createControls } from './controls';
 import { loadLighthouse } from './models';
 import { setupLights } from './lights';
@@ -42,6 +42,7 @@ window.onload = () => {
 
     setupLights(scene);
     setupFog(scene);
+    setupAudio();
 
     const renderer = new THREE.WebGLRenderer({
         antialias: true,

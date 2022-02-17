@@ -69,9 +69,9 @@ module.exports = {
                 },
             },
 
-            // Models
+            // Audio & Models
             {
-                test: /\.(glb|gltf|)$/,
+                test: /\.(glb|gltf|mp3|wav|)$/,
                 type: 'asset/resource',
             },
         ],
