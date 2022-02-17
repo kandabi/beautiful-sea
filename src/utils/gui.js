@@ -1,19 +1,10 @@
 import * as THREE from 'three';
 import * as dat from 'dat.gui';
 import initThreeDebug from 'three-dat.gui';
+import { colors } from './colors';
 initThreeDebug(dat);
 
-import Stats from 'stats.js';
-
-import { colors } from './colors';
-
 const gui = new dat.GUI({ width: 340 });
-const stats = new Stats();
-
-export const createFpsGui = () => {
-    document.body.appendChild(stats.dom);
-    return stats;
-};
 
 export const createMaterialGui = (scene, skyMaterial, waterMaterial) => {
     const seaFolder = gui.addFolder('Sea');

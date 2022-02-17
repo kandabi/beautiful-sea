@@ -1,8 +1,8 @@
 import * as THREE from 'three';
 
 import { createWaterMaterial, createSkyMaterial } from './shaders';
-import { createFpsGui, createModelGui, createMaterialGui, createCameraGui } from './utils';
-import { colors, sizes, resizeListener, setupAudio } from './utils';
+import { createModelGui, createMaterialGui, createCameraGui } from './utils';
+import { colors, sizes, resizeListener, setupAudio, toggleAudio } from './utils';
 import { createControls } from './controls';
 import { loadLighthouse } from './models';
 import { setupLights } from './lights';
@@ -10,10 +10,11 @@ import { setupFog } from './fog';
 
 import './style.css';
 
-window.onload = () => {
-    const canvas = document.querySelector('canvas.webgl');
+window.onload = () => loadApp();
+
+const loadApp = () => {
+    const canvas = document.querySelector('.webgl-canvas');
     const scene = new THREE.Scene();
-    const stats = createFpsGui();
 
     const lighthouse = loadLighthouse(scene);
 
@@ -42,7 +43,6 @@ window.onload = () => {
 
     setupLights(scene);
     setupFog(scene);
-    setupAudio();
 
     const renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -60,7 +60,6 @@ window.onload = () => {
     const clock = new THREE.Clock();
 
     const tick = () => {
-        stats.begin();
         const elapsedTime = clock.getElapsedTime();
         waterMaterial.uniforms.uTime.value = elapsedTime;
         skyMaterial.uniforms.uTime.value = elapsedTime;
@@ -69,9 +68,17 @@ window.onload = () => {
         controls.update();
         renderer.render(scene, camera);
 
-        stats.end();
         window.requestAnimationFrame(tick);
     };
 
     tick();
+
+    canvas.onmousedown = () => {
+        canvas.onmousedown = null;
+        setupAudio();
+    };
+
+    document.getElementById('mute-btn').onclick = () => {
+        toggleAudio();
+    };
 };

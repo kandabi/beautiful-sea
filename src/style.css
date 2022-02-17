@@ -10,11 +10,17 @@ body {
 }
 
 button {
+    position: absolute;
+    padding: 5px;
+    border: none;
+    z-index: 1;
+    bottom: 8%;
+    left: 10%;
 }
 
-.webgl {
+canvas {
     position: fixed;
-    top: 0;
-    left: 0;
     outline: none;
+    left: 0;
+    top: 0;
 }
