@@ -5,6 +5,12 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 export const createControls = (camera, canvas) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
+    controls.minDistance = 1.0;
+    controls.maxDistance = 7.0;
+
+    controls.maxPolarAngle = Math.PI / 2;
+    controls.minPolarAngle = Math.PI / 12;
+
     controls.target = new THREE.Vector3(-1.5, 0.16, -2.6);
     const limitPan = createLimitPan({ camera, controls });
     controls.addEventListener('change', (e) => {

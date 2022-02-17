@@ -12,8 +12,13 @@ export const createWaterMaterial = () => {
     return new THREE.ShaderMaterial({
         fragmentShader: waterFragmentShader,
         vertexShader: waterVertexShader,
+        fog: true,
         uniforms: {
             uTime: { value: 0.0 },
+
+            fogNear: { value: 0.0 },
+            fogFar: { value: 0.0 },
+            fogColor: { value: new THREE.Color(colors.depthColor) },
 
             uBigWaveSpeed: { value: 1 },
             uBigWaveElevation: { value: 0.16 },
@@ -29,8 +34,8 @@ export const createWaterMaterial = () => {
             uDepthColor: { value: new THREE.Color(colors.depthColor) },
             uSurfaceColor: { value: new THREE.Color(colors.surfaceColor) },
 
-            uColorOffset: { value: 0 },
-            uColorMultiply: { value: 1 },
+            uColorOffset: { value: 0.55 },
+            uColorMultiply: { value: 2 },
         },
     });
 };
@@ -40,16 +45,25 @@ export const createSkyMaterial = () => {
         fragmentShader: skyFragmentShader,
         vertexShader: skyVertexShader,
         transparent: true,
+        fog: true,
         uniforms: {
             uTime: { value: 0.0 },
-            uStarSpeed: { value: 0.1 },
-            uStarIntensity: { value: 0.2 },
-            uStarNoiseCount: { value: 20 },
-            uStarNoiseIntensity: { value: 0.2 },
 
-            uSkyColorMultiply: { value: 0.25 },
+            fogNear: { value: 0.0 },
+            fogFar: { value: 0.0 },
+            fogColor: { value: new THREE.Color(colors.depthColor) },
+
+            uStarCount: { value: 70.0 },
+            uStarIntensity: { value: 0.14 },
+            uStarNoiseCount: { value: 25 },
+            uStaticNoiseIntensity: { value: 0.2 },
+            uDynamicNoiseIntensity: { value: 0.5 },
+            uDynamicNoiseSpeed: { value: 0.2 },
+
+            uSkyColorMultiply: { value: 0.14 },
             uSkyDarkColor: { value: new THREE.Color(colors.darkSkyColor) },
             uSkyLightColor: { value: new THREE.Color(colors.lightSkyColor) },
+            uFogSkyIntensity: { value: 0.2 },
         },
     });
 };

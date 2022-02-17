@@ -1,18 +1,27 @@
 uniform float uTime;
-uniform float uStarSpeed;
+
+uniform float fogNear;
+uniform float fogFar;
+uniform vec3 fogColor;
+
+uniform float uStarCount;
 uniform float uStarIntensity;
 uniform float uStarNoiseCount;
-uniform float uStarNoiseIntensity;
+uniform float uStaticNoiseIntensity;
+uniform float uDynamicNoiseIntensity;
+uniform float uDynamicNoiseSpeed;
 
 uniform float uSkyColorMultiply;
 uniform vec3 uSkyDarkColor;
 uniform vec3 uSkyLightColor;
 
+uniform float uFogSkyIntensity;
+
 varying vec2 vUv;
 
-float createCircle(float starX, float starY) {
-  return uStarIntensity /
-         (distance(vec2(starX, (starY - 0.5) * 5.0 + 0.5), vec2(0.5)));
+float createCircle(float starX, float starY, float position) {
+  return uStarIntensity / (distance(vec2(starX, (starY - position) * 5.0 + 0.5),
+                                    vec2(position)));
 }
 
 //*** Classic Perlin 3D Noise by Stefan Gustavson
@@ -98,18 +107,36 @@ float cnoise(vec3 P) {
 }
 
 void main() {
-  vec2 starUvs = mod(vec2(vUv.x, vUv.y) * 20.0, 1.0);
-  float stars =
-      createCircle(starUvs.x, starUvs.y) * createCircle(starUvs.y, starUvs.x);
-  float noise = abs(cnoise(vec3(vUv * uStarNoiseCount, uTime * uStarSpeed))) *
-                uStarNoiseIntensity;
+  vec2 starUvs = mod(vec2(vUv.x, vUv.y) * uStarCount, 1.0);
+  vec3 noiseUvs = vec3(vUv * uStarNoiseCount, 0.0);
+  float staticNoise = abs(cnoise(noiseUvs)) * uStaticNoiseIntensity;
+  float dynamicNoise =
+      abs(cnoise(vec3(noiseUvs.xy, uTime * uDynamicNoiseSpeed))) *
+      uDynamicNoiseIntensity;
+
+  float starPosition = clamp(staticNoise + 0.5, 0.4, 0.6);
+  starPosition += dynamicNoise;
+  float stars = createCircle(starUvs.x, starUvs.y, starPosition) *
+                createCircle(starUvs.y, starUvs.x, starPosition);
+
   float sky = clamp((uSkyColorMultiply - abs(vUv.x - 0.5)) +
                         (uSkyColorMultiply - abs(vUv.y - 0.5)),
-                    0.0, 1.0);
+                    0.0, 1.0) *
+              3.0;
 
-  stars *= noise;
-  sky += stars * 3.0;
+  sky += stars;
   vec3 finalColor = mix(uSkyDarkColor, uSkyLightColor, sky);
+  // vec3 finalColor = vec3(stars);
 
   gl_FragColor = vec4(finalColor, 1.0);
+
+#ifdef USE_FOG
+#ifdef USE_LOGDEPTHBUF_EXT
+  float depth = gl_FragDepthEXT / gl_FragCoord.w;
+#else
+  float depth = gl_FragCoord.z / gl_FragCoord.w;
+#endif
+  float fogFactor = smoothstep(fogNear, fogFar, depth * uFogSkyIntensity);
+  gl_FragColor.rgb = mix(gl_FragColor.rgb, fogColor, fogFactor);
+#endif
 }

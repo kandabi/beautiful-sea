@@ -1,13 +1,11 @@
 export const colors = {
-    backgroundColor: 0xe126e,
-    // backgroundColor: 0x002266,
-    surfaceColor: 0xc8d9ee,
-    depthColor: 0x2c65af,
+    backgroundColor: 0x1c277f,
+    lightSkyColor: 0x26b2ed,
+    darkSkyColor: 0x1c277f,
 
-    // lightSkyColor: 0x002e6b,
-    // darkSkyColor: 0x002266,
-    lightSkyColor: 0x4aff,
-    darkSkyColor: 0x101070,
+    surfaceColor: 0x26b2ed,
+    depthColor: 0x1c277f,
 
+    directionalColor: 0x7acaff,
     ambientColor: 0xffffff,
 };

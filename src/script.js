@@ -6,6 +6,7 @@ import { colors, sizes, resizeListener } from './utils';
 import { createControls } from './controls';
 import { loadLighthouse } from './models';
 import { setupLights } from './lights';
+import { setupFog } from './fog';
 
 import './style.css';
 
@@ -16,11 +17,12 @@ window.onload = () => {
 
     const lighthouse = loadLighthouse(scene);
 
-    const waterGeometry = new THREE.PlaneGeometry(12, 12, 256, 256);
-    const skyGeometry = new THREE.PlaneGeometry(64, 64, 64, 64);
+    const waterGeometry = new THREE.PlaneGeometry(22, 22, 256, 256);
+    const skyGeometry = new THREE.PlaneGeometry(96, 96, 128, 128);
 
     const waterMaterial = createWaterMaterial();
     const skyMaterial = createSkyMaterial();
+
     createMaterialGui(scene, skyMaterial, waterMaterial);
 
     const water = new THREE.Mesh(waterGeometry, waterMaterial);
@@ -31,13 +33,15 @@ window.onload = () => {
     scene.add(water);
     scene.add(sky);
 
-    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.01, 65);
+    const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.01, 125);
     camera.position.set(-1.08, 0.55, 1.3);
-    // camera.position.set(0, 9, 0);
-    scene.add(camera);
     createCameraGui(camera);
+    scene.add(camera);
+    // camera.position.set(0, 9, 0); //*** Top View
+    // camera.position.set(0, -3, 0);  //*** Bottom View
 
     setupLights(scene);
+    setupFog(scene);
 
     const renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -59,9 +63,7 @@ window.onload = () => {
         const elapsedTime = clock.getElapsedTime();
         waterMaterial.uniforms.uTime.value = elapsedTime;
         skyMaterial.uniforms.uTime.value = elapsedTime;
-        sky.rotation.z = elapsedTime * Math.PI * 0.02;
-
-        console.log('camera', camera.position, camera.rotation);
+        sky.rotation.z = elapsedTime * Math.PI * 0.01;
 
         controls.update();
         renderer.render(scene, camera);

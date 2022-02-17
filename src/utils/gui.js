@@ -5,7 +5,7 @@ initThreeDebug(dat);
 
 import Stats from 'stats.js';
 
-import { colors } from '.';
+import { colors } from './colors';
 
 const gui = new dat.GUI({ width: 340 });
 const stats = new Stats();
@@ -16,12 +16,6 @@ export const createFpsGui = () => {
 };
 
 export const createMaterialGui = (scene, skyMaterial, waterMaterial) => {
-    gui.addColor(colors, 'backgroundColor')
-        .name('Background Color')
-        .onChange(() => {
-            scene.background = new THREE.Color(colors.backgroundColor);
-        });
-
     const seaFolder = gui.addFolder('Sea');
 
     seaFolder.add(waterMaterial.uniforms.uBigWaveSpeed, 'value', 0, 5, 0.001).name('Big Wave Speed');
@@ -36,7 +30,7 @@ export const createMaterialGui = (scene, skyMaterial, waterMaterial) => {
     seaFolder.add(waterMaterial.uniforms.uFoamStrength, 'value', 0, 0.1, 0.001).name('Foam Strength');
 
     seaFolder.add(waterMaterial.uniforms.uColorOffset, 'value', -1, 1, 0.01).name('Color Offset');
-    seaFolder.add(waterMaterial.uniforms.uColorMultiply, 'value', 1, 10, 0.01).name('Color Multiply');
+    seaFolder.add(waterMaterial.uniforms.uColorMultiply, 'value', -5, 10, 0.01).name('Color Multiply');
 
     seaFolder
         .addColor(colors, 'depthColor')
@@ -53,12 +47,22 @@ export const createMaterialGui = (scene, skyMaterial, waterMaterial) => {
         });
 
     const skyFolder = gui.addFolder('Sky');
-    skyFolder.add(skyMaterial.uniforms.uStarSpeed, 'value', 0, 0.3, 0.001).name('Star Speed');
+    skyFolder.add(skyMaterial.uniforms.uStarCount, 'value', 0, 120.0, 1.0).name('Star Count');
     skyFolder.add(skyMaterial.uniforms.uStarIntensity, 'value', 0.001, 1.0, 0.01).name('Star Intensity');
     skyFolder.add(skyMaterial.uniforms.uStarNoiseCount, 'value', 0, 50, 0.01).name('Star Noise Count');
-    skyFolder.add(skyMaterial.uniforms.uStarNoiseIntensity, 'value', 0, 1, 0.001).name('Star Noise Intensity');
+
+    skyFolder.add(skyMaterial.uniforms.uStaticNoiseIntensity, 'value', 0, 1, 0.001).name('Static Noise Intensity');
+    skyFolder.add(skyMaterial.uniforms.uDynamicNoiseIntensity, 'value', 0, 1, 0.001).name('Dynamic Noise Intensity');
+    skyFolder.add(skyMaterial.uniforms.uDynamicNoiseSpeed, 'value', 0, 0.8, 0.001).name('Dynamic Noise Speed');
 
     skyFolder.add(skyMaterial.uniforms.uSkyColorMultiply, 'value', 0, 1, 0.001).name('Sky Color Multiply');
+    skyFolder
+        .addColor(colors, 'backgroundColor')
+        .name('Background Color')
+        .onChange(() => {
+            scene.background = new THREE.Color(colors.backgroundColor);
+        });
+
     skyFolder
         .addColor(colors, 'darkSkyColor')
         .name('Dark Sky Color')
@@ -72,6 +76,8 @@ export const createMaterialGui = (scene, skyMaterial, waterMaterial) => {
         .onChange(() => {
             skyMaterial.uniforms.uSkyLightColor.value.set(colors.lightSkyColor);
         });
+
+    skyFolder.add(skyMaterial.uniforms.uFogSkyIntensity, 'value', 0, 1, 0.001).name('Sky Fog Intensity');
 
     gui.close();
     skyFolder.close();
@@ -105,8 +111,16 @@ export const createModelGui = (model) => {
     modelFolder.close();
 };
 
-export const createLightGui = (ambient) => {
+export const createLightGui = (ambient, directionalLight) => {
     const lightFolder = gui.addFolder('Lights');
     lightFolder.addLight('Ambient', ambient);
+    lightFolder.addLight('Directional', directionalLight);
     lightFolder.close();
+};
+
+export const createFogGui = (fog) => {
+    const fogFolder = gui.addFolder('Fog');
+    fogFolder.add(fog, 'near', 0, 10.0, 0.01).name('Fog Near');
+    fogFolder.add(fog, 'far', 0, 30.0, 0.01).name('Fog Far');
+    fogFolder.close();
 };
