@@ -11,7 +11,7 @@ export const createControls = (camera, canvas) => {
     controls.maxPolarAngle = Math.PI / 2;
     controls.minPolarAngle = Math.PI / 12;
 
-    controls.target = new THREE.Vector3(-1.5, 0.16, -2.6);
+    controls.target = new THREE.Vector3(-2.4, 0.16, -2.6);
     const limitPan = createLimitPan({ camera, controls });
     controls.addEventListener('change', (e) => {
         limitPan({ minX: -4, maxX: 4, minY: -0.2, maxY: 3, minZ: -4, maxZ: 4 });

@@ -34,7 +34,7 @@ window.onload = () => {
     scene.add(sky);
 
     const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.01, 125);
-    camera.position.set(-1.08, 0.55, 1.3);
+    camera.position.set(-1.08, 0.45, 1.3);
     createCameraGui(camera);
     scene.add(camera);
     // camera.position.set(0, 9, 0); //*** Top View
