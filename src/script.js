@@ -42,7 +42,7 @@ const createApp = () => {
         sky.material.uniforms.uTime.value = elapsedTime;
         sky.rotation.z = elapsedTime * Math.PI * 0.01;
 
-        pivot.rotation.y = elapsedTime * Math.PI * 0.1;
+        pivot.rotation.y = elapsedTime * Math.PI * 0.1 + 5;
 
         controls.update();
         renderer.render(scene, camera);

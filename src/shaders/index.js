@@ -50,7 +50,7 @@ export const createLampMaterial = () => {
         transparent: true,
         fog: true,
         uniforms: {
-            uLampStrength: { value: 0.75 },
+            uLampStrength: { value: 0.6 },
             uLampOffset: { value: 0.5 },
 
             fogColor: { value: new THREE.Color(colors.depthColor) },
