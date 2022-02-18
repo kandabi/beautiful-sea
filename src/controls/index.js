@@ -15,7 +15,7 @@ export const createControls = (camera, canvas) => {
     controls.target = new THREE.Vector3(-0.8, 0.16, -2.6);
     const limitPan = createLimitPan({ camera, controls });
     controls.addEventListener('change', (e) => {
-        limitPan({ minX: -2.5, maxX: 2.5, minY: -0.2, maxY: 3, minZ: -2.5, maxZ: 4.0 });
+        limitPan({ minX: -2.5, maxX: 2.5, minY: 0.2, maxY: 3, minZ: -2.5, maxZ: 4.0 });
     });
 
     createCameraGui(camera);
