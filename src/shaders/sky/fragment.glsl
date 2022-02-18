@@ -5,23 +5,23 @@ uniform float fogFar;
 uniform vec3 fogColor;
 
 uniform float uStarCount;
-uniform float uStarIntensity;
+uniform float uStarStrength;
 uniform float uStarNoiseCount;
-uniform float uStaticNoiseIntensity;
-uniform float uDynamicNoiseIntensity;
+uniform float uStaticNoiseStrength;
+uniform float uDynamicNoiseStrength;
 uniform float uDynamicNoiseSpeed;
 
 uniform float uSkyColorMultiply;
 uniform vec3 uSkyDarkColor;
 uniform vec3 uSkyLightColor;
 
-uniform float uFogSkyIntensity;
+uniform float uFogSkyStrength;
 
 varying vec2 vUv;
 
 float createCircle(float starX, float starY, float position) {
-  return uStarIntensity / (distance(vec2(starX, (starY - position) * 5.0 + 0.5),
-                                    vec2(position)));
+  return uStarStrength / (distance(vec2(starX, (starY - position) * 5.0 + 0.5),
+                                   vec2(position)));
 }
 
 //*** Classic Perlin 3D Noise by Stefan Gustavson
@@ -109,10 +109,10 @@ float cnoise(vec3 P) {
 void main() {
   vec2 starUvs = mod(vec2(vUv.x, vUv.y) * uStarCount, 1.0);
   vec3 noiseUvs = vec3(vUv * uStarNoiseCount, 0.0);
-  float staticNoise = abs(cnoise(noiseUvs)) * uStaticNoiseIntensity;
+  float staticNoise = abs(cnoise(noiseUvs)) * uStaticNoiseStrength;
   float dynamicNoise =
       abs(cnoise(vec3(noiseUvs.xy, uTime * uDynamicNoiseSpeed))) *
-      uDynamicNoiseIntensity;
+      uDynamicNoiseStrength;
 
   float starPosition = clamp(staticNoise + 0.5, 0.4, 0.6);
   starPosition += dynamicNoise;
@@ -136,7 +136,7 @@ void main() {
 #else
   float depth = gl_FragCoord.z / gl_FragCoord.w;
 #endif
-  float fogFactor = smoothstep(fogNear, fogFar, depth * uFogSkyIntensity);
+  float fogFactor = smoothstep(fogNear, fogFar, depth * uFogSkyStrength);
   gl_FragColor.rgb = mix(gl_FragColor.rgb, fogColor, fogFactor);
 #endif
 }

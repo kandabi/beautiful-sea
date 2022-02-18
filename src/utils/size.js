@@ -3,7 +3,7 @@ export const sizes = {
     width: window.innerWidth,
 };
 
-export const resizeListener = (camera, renderer) => {
+export const createResizeListener = (camera, renderer) => {
     window.addEventListener('resize', () => {
         sizes.height = window.innerHeight;
         sizes.width = window.innerWidth;

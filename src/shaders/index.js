@@ -1,10 +1,13 @@
 import * as THREE from 'three';
 
-import waterVertexShader from '../shaders/water/vertex.glsl';
 import waterFragmentShader from '../shaders/water/fragment.glsl';
+import waterVertexShader from '../shaders/water/vertex.glsl';
 
-import skyVertexShader from '../shaders/sky/vertex.glsl';
+import lampFragmentShader from '../shaders/lamp/fragment.glsl';
+import lampVertexShader from '../shaders/lamp/vertex.glsl';
+
 import skyFragmentShader from '../shaders/sky/fragment.glsl';
+import skyVertexShader from '../shaders/sky/vertex.glsl';
 
 import { colors } from '../utils/colors';
 
@@ -16,9 +19,9 @@ export const createWaterMaterial = () => {
         uniforms: {
             uTime: { value: 0.0 },
 
+            fogColor: { value: new THREE.Color(colors.depthColor) },
             fogNear: { value: 0.0 },
             fogFar: { value: 0.0 },
-            fogColor: { value: new THREE.Color(colors.depthColor) },
 
             uBigWaveSpeed: { value: 1 },
             uBigWaveElevation: { value: 0.16 },
@@ -40,6 +43,25 @@ export const createWaterMaterial = () => {
     });
 };
 
+export const createLampMaterial = () => {
+    return new THREE.ShaderMaterial({
+        fragmentShader: lampFragmentShader,
+        vertexShader: lampVertexShader,
+        transparent: true,
+        fog: true,
+        uniforms: {
+            uLampStrength: { value: 0.75 },
+            uLampOffset: { value: 0.5 },
+
+            fogColor: { value: new THREE.Color(colors.depthColor) },
+            fogNear: { value: 0.0 },
+            fogFar: { value: 0.0 },
+
+            uLampSkyStrength: { value: 1.0 },
+        },
+    });
+};
+
 export const createSkyMaterial = () => {
     return new THREE.ShaderMaterial({
         fragmentShader: skyFragmentShader,
@@ -49,21 +71,21 @@ export const createSkyMaterial = () => {
         uniforms: {
             uTime: { value: 0.0 },
 
+            fogColor: { value: new THREE.Color(colors.depthColor) },
             fogNear: { value: 0.0 },
             fogFar: { value: 0.0 },
-            fogColor: { value: new THREE.Color(colors.depthColor) },
 
             uStarCount: { value: 70.0 },
-            uStarIntensity: { value: 0.14 },
+            uStarStrength: { value: 0.14 },
             uStarNoiseCount: { value: 25 },
-            uStaticNoiseIntensity: { value: 0.2 },
-            uDynamicNoiseIntensity: { value: 0.5 },
+            uStaticNoiseStrength: { value: 0.2 },
+            uDynamicNoiseStrength: { value: 0.5 },
             uDynamicNoiseSpeed: { value: 0.2 },
 
             uSkyColorMultiply: { value: 0.14 },
             uSkyDarkColor: { value: new THREE.Color(colors.darkSkyColor) },
             uSkyLightColor: { value: new THREE.Color(colors.lightSkyColor) },
-            uFogSkyIntensity: { value: 0.2 },
+            uFogSkyStrength: { value: 0.2 },
         },
     });
 };
