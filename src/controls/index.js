@@ -9,13 +9,13 @@ export const createControls = (camera, canvas) => {
     controls.minDistance = 1.0;
     controls.maxDistance = 7.0;
 
-    controls.minPolarAngle = Math.PI / 12;
-    controls.maxPolarAngle = Math.PI / 2;
+    controls.minPolarAngle = Math.PI / 24;
+    controls.maxPolarAngle = Math.PI / 1.9;
 
     controls.target = new THREE.Vector3(0, 0.16, -2.6);
     const limitPan = createLimitPan({ camera, controls });
     controls.addEventListener('change', (e) => {
-        limitPan({ minX: -3, maxX: 3, minY: 0.2, maxY: 3, minZ: -3, maxZ: 3.0 });
+        limitPan({ minX: -3, maxX: 3, minY: 0.3, maxY: 3, minZ: -3, maxZ: 3.0 });
     });
 
     createCameraGui(camera);
