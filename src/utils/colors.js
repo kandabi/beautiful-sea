@@ -1,7 +1,7 @@
 export const colors = {
-    backgroundColor: 0x1122,
+    backgroundColor: 0x000000,
     lightSkyColor: 0x26b2ed,
-    darkSkyColor: 0x1122,
+    darkSkyColor: 0x000000,
 
     surfaceColor: 0x26b2ed,
     depthColor: 0x17cd,
