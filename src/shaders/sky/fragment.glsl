@@ -11,6 +11,7 @@ uniform float uStaticNoiseStrength;
 uniform float uDynamicNoiseStrength;
 uniform float uDynamicNoiseSpeed;
 
+uniform float uSkyGlowSpeed;
 uniform float uSkyColorMultiply;
 uniform vec3 uSkyDarkColor;
 uniform vec3 uSkyLightColor;
@@ -114,21 +115,19 @@ void main() {
       abs(cnoise(vec3(noiseUvs.xy, uTime * uDynamicNoiseSpeed))) *
       uDynamicNoiseStrength;
 
-  float starPosition = clamp(staticNoise + 0.5, 0.4, 0.6);
-  starPosition += dynamicNoise;
-  float stars = createCircle(starUvs.x, starUvs.y, starPosition) *
-                createCircle(starUvs.y, starUvs.x, starPosition);
-
   float sky = clamp((uSkyColorMultiply - abs(vUv.x - 0.5)) +
                         (uSkyColorMultiply - abs(vUv.y - 0.5)),
                     0.0, 1.0) *
-              3.0;
+              clamp(sin(uTime * uSkyGlowSpeed), 0.0, 1.0) * 4.0;
 
-  sky += stars;
-  vec3 finalColor = mix(uSkyDarkColor, uSkyLightColor, sky);
-  // vec3 finalColor = vec3(stars);
+  float starPosition = clamp(staticNoise + 0.5, 0.4, 0.6) + dynamicNoise;
+  float stars = createCircle(starUvs.x, starUvs.y, starPosition) *
+                createCircle(starUvs.y, starUvs.x, starPosition);
 
-  gl_FragColor = vec4(finalColor, 1.0);
+  stars += sky;
+  vec3 mixedColor = mix(uSkyDarkColor, uSkyLightColor * vec3(vUv, 1.0), stars);
+
+  gl_FragColor = vec4(mixedColor, 1.0);
 
 #ifdef USE_FOG
 #ifdef USE_LOGDEPTHBUF_EXT

@@ -11,13 +11,12 @@ import { setupLights } from './lights';
 import './style.css';
 
 window.onload = () => createApp();
-
 const createApp = () => {
     const canvas = document.querySelector('.webgl-canvas');
     const scene = new THREE.Scene();
 
     loadLighthouse(scene);
-    const { lamp, pivot } = setupLamp(scene);
+    const lamp = setupLamp(scene);
     const water = setupWater(scene);
     const sky = setupSky(scene);
 
@@ -35,14 +34,14 @@ const createApp = () => {
 
     const controls = createControls(camera, renderer.domElement);
     const clock = new THREE.Clock();
+    const speed = Math.PI * 0.1;
 
     const tick = () => {
         const elapsedTime = clock.getElapsedTime();
+        lamp.pivot.rotation.y = elapsedTime * speed + 0.05 + Math.sin(elapsedTime) * speed + 5;
+        sky.rotation.y = -elapsedTime * Math.PI * 0.01 - 3.8;
         water.material.uniforms.uTime.value = elapsedTime;
         sky.material.uniforms.uTime.value = elapsedTime;
-        sky.rotation.z = elapsedTime * Math.PI * 0.01;
-
-        pivot.rotation.y = elapsedTime * Math.PI * 0.1 + 5;
 
         controls.update();
         renderer.render(scene, camera);
@@ -51,7 +50,7 @@ const createApp = () => {
 
     tick();
 
-    createMaterialGui(scene, sky, water, lamp, pivot);
+    createMaterialGui(scene, sky, water, lamp);
     createResizeListener(camera, renderer);
     createMuteButton();
 };

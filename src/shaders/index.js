@@ -50,8 +50,9 @@ export const createLampMaterial = () => {
         transparent: true,
         fog: true,
         uniforms: {
-            uLampStrength: { value: 0.6 },
+            uLampStrength: { value: 0.9 },
             uLampOffset: { value: 0.5 },
+            uLampColor: { value: new THREE.Color(colors.lampColor) },
 
             fogColor: { value: new THREE.Color(colors.depthColor) },
             fogNear: { value: 0.0 },
@@ -67,6 +68,7 @@ export const createSkyMaterial = () => {
         fragmentShader: skyFragmentShader,
         vertexShader: skyVertexShader,
         transparent: true,
+        side: THREE.BackSide,
         fog: true,
         uniforms: {
             uTime: { value: 0.0 },
@@ -75,14 +77,15 @@ export const createSkyMaterial = () => {
             fogNear: { value: 0.0 },
             fogFar: { value: 0.0 },
 
-            uStarCount: { value: 70.0 },
-            uStarStrength: { value: 0.14 },
-            uStarNoiseCount: { value: 25 },
-            uStaticNoiseStrength: { value: 0.2 },
-            uDynamicNoiseStrength: { value: 0.5 },
-            uDynamicNoiseSpeed: { value: 0.2 },
+            uStarCount: { value: 60.0 },
+            uStarStrength: { value: 0.05 },
+            uStarNoiseCount: { value: 50 },
+            uStaticNoiseStrength: { value: 0.25 },
+            uDynamicNoiseStrength: { value: 1 },
+            uDynamicNoiseSpeed: { value: 0.05 },
 
-            uSkyColorMultiply: { value: 0.14 },
+            uSkyGlowSpeed: { value: 0.5 },
+            uSkyColorMultiply: { value: 0.175 },
             uSkyDarkColor: { value: new THREE.Color(colors.darkSkyColor) },
             uSkyLightColor: { value: new THREE.Color(colors.lightSkyColor) },
             uFogSkyStrength: { value: 0.2 },

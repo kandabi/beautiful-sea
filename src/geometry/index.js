@@ -5,8 +5,7 @@ import { createLighthouseGui, createFogGui, colors } from '../utils';
 
 export const setupLighthouse = (scene, model) => {
     const lighthouse = model.scene;
-    lighthouse.position.set(0, -0.3, 0);
-    // lighthouse.position.set(-1, -0.3, -1);
+    lighthouse.position.set(0, -0.4, -2);
     lighthouse.scale.set(0.07, 0.07, 0.07);
     scene.add(lighthouse);
     createLighthouseGui(lighthouse);
@@ -25,28 +24,35 @@ export const setupWater = (scene) => {
 export const setupSky = (scene) => {
     scene.background = new THREE.Color(colors.backgroundColor);
     const skyMaterial = createSkyMaterial();
-    const skyGeometry = new THREE.PlaneGeometry(96, 96, 128, 128);
+    const skyGeometry = new THREE.SphereGeometry(72, 128, 64, 0, Math.PI * 2.0, Math.PI * 2.0, Math.PI * 0.25);
     const sky = new THREE.Mesh(skyGeometry, skyMaterial);
-    sky.rotation.set(-Math.PI * 0.5, Math.PI, 0.0);
-    sky.position.y = 5;
+    sky.scale.set(0.6, 0.4, 0.6);
+    sky.position.y = -23;
     scene.add(sky);
     return sky;
 };
 
 export const setupLamp = (scene) => {
     const lampMaterial = createLampMaterial();
-    const lampGeometry = new THREE.CylinderGeometry(0.25, 0.035, 20, 64);
-    const lamp = new THREE.Mesh(lampGeometry, lampMaterial);
-    lamp.rotation.x = Math.PI * 0.5 + 0.05;
-    lamp.position.set(0, 0, 10); //*** Offsets the lamp to be half the total width of the light, to enable pivoting it on the edge.
+    const lampGeometry = new THREE.CylinderGeometry(0.25, 0.02, 17, 64);
+
+    const first = new THREE.Mesh(lampGeometry, lampMaterial);
+    first.rotation.x = Math.PI * 0.5 + 0.05;
+    first.position.set(0, 0, 8.5);
+
+    const second = new THREE.Mesh(lampGeometry, lampMaterial);
+    second.rotation.x = Math.PI * 0.5 - 0.05;
+    second.rotation.z = Math.PI;
+    second.position.set(0, 0, -8.5);
 
     const pivot = new THREE.Group();
-    pivot.position.set(-0.04, 1.04, -0.16);
+    pivot.position.set(-0.04, 1.02, -2.16);
 
     scene.add(pivot);
-    pivot.add(lamp);
+    pivot.add(first);
+    pivot.add(second);
 
-    return { lamp, pivot };
+    return { first, second, pivot };
 };
 
 export const setupFog = (scene) => {

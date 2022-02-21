@@ -6,18 +6,18 @@ uniform vec3 fogColor;
 
 uniform float uLampStrength;
 uniform float uLampOffset;
+uniform vec3 uLampColor;
 
 uniform float uLampSkyStrength;
 
 varying vec2 vUv;
 
 void main() {
-  //
-  float light =
+  float lamp =
       uLampStrength - (abs(vUv.x - uLampOffset) * abs(vUv.y - uLampOffset));
-  light *= 1.2;
 
-  gl_FragColor = vec4(light, light, light, light);
+  vec3 finalcolor = mix(uLampColor * vec3(vUv, 1.0), vec3(1.0), lamp);
+  gl_FragColor = vec4(finalcolor, lamp);
 
 #ifdef USE_FOG
 #ifdef USE_LOGDEPTHBUF_EXT

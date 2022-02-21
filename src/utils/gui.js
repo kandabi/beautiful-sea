@@ -6,7 +6,7 @@ initThreeDebug(dat);
 
 const gui = new dat.GUI({ width: 340 });
 
-export const createMaterialGui = (scene, sky, water, lamp, pivot) => {
+export const createMaterialGui = (scene, sky, water, lamp) => {
     const seaFolder = gui.addFolder('Sea');
 
     seaFolder.add(water.material.uniforms.uBigWaveSpeed, 'value', 0, 5, 0.001).name('Big Wave Speed');
@@ -38,6 +38,15 @@ export const createMaterialGui = (scene, sky, water, lamp, pivot) => {
         });
 
     const skyFolder = gui.addFolder('Sky');
+
+    skyFolder.add(sky.position, 'x', -5, 5, 0.01).name('Position X');
+    skyFolder.add(sky.position, 'y', -125, 5, 0.01).name('Position Y');
+    skyFolder.add(sky.position, 'z', -5, 5, 0.01).name('Position Z');
+
+    skyFolder.add(sky.scale, 'x', -2, 3, 0.01).name('Scale X');
+    skyFolder.add(sky.scale, 'y', -2, 3, 0.01).name('Scale Y');
+    skyFolder.add(sky.scale, 'z', -2, 3, 0.01).name('Scale Z');
+
     skyFolder.add(sky.material.uniforms.uStarCount, 'value', 0, 120.0, 1.0).name('Star Count');
     skyFolder.add(sky.material.uniforms.uStarStrength, 'value', 0.001, 1.0, 0.01).name('Star Strength');
     skyFolder.add(sky.material.uniforms.uStarNoiseCount, 'value', 0, 50, 0.01).name('Star Noise Count');
@@ -45,6 +54,8 @@ export const createMaterialGui = (scene, sky, water, lamp, pivot) => {
     skyFolder.add(sky.material.uniforms.uStaticNoiseStrength, 'value', 0, 1, 0.001).name('Static Noise Strength');
     skyFolder.add(sky.material.uniforms.uDynamicNoiseStrength, 'value', 0, 1, 0.001).name('Dynamic Noise Strength');
     skyFolder.add(sky.material.uniforms.uDynamicNoiseSpeed, 'value', 0, 0.8, 0.001).name('Dynamic Noise Speed');
+
+    skyFolder.add(sky.material.uniforms.uSkyGlowSpeed, 'value', 0, 1, 0.001).name('Sky Glow Speed');
 
     skyFolder.add(sky.material.uniforms.uSkyColorMultiply, 'value', 0, 1, 0.001).name('Sky Color Multiply');
     skyFolder
@@ -71,17 +82,24 @@ export const createMaterialGui = (scene, sky, water, lamp, pivot) => {
     skyFolder.add(sky.material.uniforms.uFogSkyStrength, 'value', 0, 1, 0.001).name('Sky Fog Strength');
 
     const lampFolder = gui.addFolder('Lamp');
-    lampFolder.add(lamp.material.uniforms.uLampStrength, 'value', -1, 1, 0.01).name('Lamp Strength');
-    lampFolder.add(lamp.material.uniforms.uLampOffset, 'value', -1, 1, 0.01).name('Lamp Offset');
-    lampFolder.add(lamp.material.uniforms.uLampSkyStrength, 'value', -1, 2, 0.01).name('Lamp Fog Strength');
+    lampFolder.add(lamp.first.material.uniforms.uLampStrength, 'value', -1, 1, 0.01).name('Lamp Strength');
+    lampFolder.add(lamp.first.material.uniforms.uLampOffset, 'value', -1, 1, 0.01).name('Lamp Offset');
+    lampFolder.add(lamp.first.material.uniforms.uLampSkyStrength, 'value', -1, 2, 0.01).name('Lamp Fog Strength');
 
-    lampFolder.add(pivot.position, 'x', -2, 3, 0.01).name('Position X');
-    lampFolder.add(pivot.position, 'y', -2, 3, 0.01).name('Position Y');
-    lampFolder.add(pivot.position, 'z', -2, 3, 0.01).name('Position Z');
+    lampFolder
+        .addColor(colors, 'lampColor')
+        .name('Lamp Color')
+        .onChange(() => {
+            lamp.first.material.uniforms.uLampColor.value.set(colors.lampColor);
+        });
 
-    lampFolder.add(lamp.rotation, 'x', -4, 4, 0.01).name('Rotation X');
-    lampFolder.add(lamp.rotation, 'y', -4, 4, 0.01).name('Rotation Y');
-    lampFolder.add(lamp.rotation, 'z', -4, 4, 0.01).name('Rotation Z');
+    lampFolder.add(lamp.pivot.position, 'x', -2, 3, 0.01).name('Position X');
+    lampFolder.add(lamp.pivot.position, 'y', -2, 3, 0.01).name('Position Y');
+    lampFolder.add(lamp.pivot.position, 'z', -2, 3, 0.01).name('Position Z');
+
+    lampFolder.add(lamp.first.rotation, 'x', -4, 4, 0.01).name('Rotation X');
+    lampFolder.add(lamp.first.rotation, 'y', -4, 4, 0.01).name('Rotation Y');
+    lampFolder.add(lamp.first.rotation, 'z', -4, 4, 0.01).name('Rotation Z');
 
     gui.close();
     lampFolder.close();
