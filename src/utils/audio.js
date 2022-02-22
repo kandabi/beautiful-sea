@@ -9,7 +9,7 @@ export const setupAudio = (canvas) => {
     const muteBtn = document.getElementById('mute-btn');
     muteBtn.onclick = (event) => toggleAudio(event.target);
     const isMuted = JSON.parse(localStorage.getItem('isMuted'));
-    if (isMuted) {
+    if (!isMuted) {
         canvas.onmousedown = () => {
             canvas.onmousedown = null;
             toggleAudio(muteBtn);
@@ -18,6 +18,7 @@ export const setupAudio = (canvas) => {
 };
 
 export const toggleAudio = (button) => {
+    localStorage.setItem('isMuted', isPlaying);
     isPlaying = !isPlaying;
     if (isPlaying) {
         button.classList.remove('is-muted');
@@ -26,6 +27,4 @@ export const toggleAudio = (button) => {
         button.classList.add('is-muted');
         audio.pause();
     }
-
-    localStorage.setItem('isMuted', isPlaying);
 };
