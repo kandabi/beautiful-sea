@@ -9,15 +9,6 @@ body {
     margin: auto;
 }
 
-button {
-    background-color: transparent;
-    background-repeat: no-repeat;
-    overflow: hidden;
-    cursor: pointer;
-    outline: none;
-    border: none;
-}
-
 canvas {
     position: fixed;
     outline: none;
@@ -27,17 +18,28 @@ canvas {
 
 img {
     pointer-events: none;
+    max-height: 50px;
+    max-width: 50px;
     width: 100%;
 }
 
-#mute-btn {
+a {
+    display: block;
+}
+
+.button-container {
+    flex-direction: column;
     position: absolute;
-    max-width: 50px;
-    padding: 5px;
-    border: none;
+    display: flex;
     z-index: 1;
     bottom: 8%;
     left: 10%;
+    gap: 12px;
+}
+
+#mute-btn {
+    cursor: pointer;
+    border: none;
 }
 
 #mute-btn:not(.is-muted) > img.mute,
