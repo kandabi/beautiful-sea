@@ -39,7 +39,6 @@ a {
 
 #mute-btn {
     cursor: pointer;
-    border: none;
 }
 
 #mute-btn:not(.is-muted) > img.mute,
