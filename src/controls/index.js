@@ -10,7 +10,7 @@ export const createControls = (camera, canvas) => {
     controls.maxDistance = 7.0;
 
     controls.minPolarAngle = Math.PI / 24;
-    controls.maxPolarAngle = Math.PI / 1.9;
+    controls.maxPolarAngle = Math.PI / 1.95;
 
     controls.target = new THREE.Vector3(0, 0.16, -2.6);
     const limitPan = createLimitPan({ camera, controls });

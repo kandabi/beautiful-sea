@@ -146,9 +146,3 @@ export const createFogGui = (fog) => {
     fogFolder.add(fog, 'far', 0, 30.0, 0.01).name('Fog Far');
     fogFolder.close();
 };
-
-export const createMuteButton = () => {
-    document.getElementById('mute-btn').onclick = (event) => {
-        toggleAudio(event.target);
-    };
-};

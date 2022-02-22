@@ -1,7 +1,7 @@
 import * as THREE from 'three';
 
-import { createMaterialGui, createResizeListener } from './utils';
-import { createMuteButton, colors, sizes } from './utils';
+import { createMaterialGui, createResizeListener, toggleAudio } from './utils';
+import { setupAudio, colors, sizes } from './utils';
 import { setupSky, setupLamp, setupWater, setupFog } from './geometry';
 import { createControls } from './controls';
 import { loadLighthouse } from './models';
@@ -16,8 +16,8 @@ const createApp = () => {
     const scene = new THREE.Scene();
 
     loadLighthouse(scene);
-    const lamp = setupLamp(scene);
     const water = setupWater(scene);
+    const lamp = setupLamp(scene);
     const sky = setupSky(scene);
 
     setupLights(scene);
@@ -38,7 +38,7 @@ const createApp = () => {
 
     const tick = () => {
         const elapsedTime = clock.getElapsedTime();
-        lamp.pivot.rotation.y = elapsedTime * speed + 0.05 + Math.sin(elapsedTime) * speed + 5;
+        lamp.pivot.rotation.y = elapsedTime * speed + Math.sin(elapsedTime) * speed + 5.0;
         sky.rotation.y = -elapsedTime * Math.PI * 0.01 - 3.8;
         water.material.uniforms.uTime.value = elapsedTime;
         sky.material.uniforms.uTime.value = elapsedTime;
@@ -52,5 +52,5 @@ const createApp = () => {
 
     createMaterialGui(scene, sky, water, lamp);
     createResizeListener(camera, renderer);
-    createMuteButton();
+    setupAudio(canvas);
 };
