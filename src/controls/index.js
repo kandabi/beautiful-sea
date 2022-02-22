@@ -6,6 +6,10 @@ import { createCameraGui } from '../utils';
 export const createControls = (camera, canvas) => {
     const controls = new OrbitControls(camera, canvas);
     controls.enableDamping = true;
+    controls.dampingFactor = 0.02;
+    controls.rotateSpeed = 0.35;
+    controls.zoomSpeed = 0.7;
+
     controls.minDistance = 1.0;
     controls.maxDistance = 7.0;
 
