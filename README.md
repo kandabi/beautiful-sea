@@ -1,4 +1,4 @@
-# Beautiful sea, created in threejs
+# Threejs ocean
 
 ### Inspired by [Bruno Simon](https://threejs-journey.com/)
 
