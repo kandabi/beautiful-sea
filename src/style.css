@@ -5,6 +5,7 @@
 
 html,
 body {
+    font-family: 'Roboto', sans-serif;
     overflow: hidden;
     margin: auto;
 }
@@ -18,13 +19,27 @@ canvas {
 
 img {
     pointer-events: none;
-    max-height: 50px;
-    max-width: 50px;
+    max-height: 40px;
+    max-width: 40px;
     width: 100%;
 }
 
 a {
-    display: block;
+    display: inline-block;
+    font-size: 1.1em;
+    cursor: pointer;
+    color: #ea8462;
+}
+
+.watermark-container {
+    color: #fff;
+    position: absolute;
+    text-align: center;
+    font-size: 1.1em;
+    width: 100%;
+    z-index: 1;
+    left: 0;
+    top: 3%;
 }
 
 .button-container {
@@ -32,8 +47,8 @@ a {
     position: absolute;
     display: flex;
     z-index: 1;
-    bottom: 8%;
-    left: 10%;
+    bottom: 5%;
+    left: 5%;
     gap: 12px;
 }
 
@@ -45,3 +60,9 @@ a {
 #mute-btn.is-muted > img.unmute {
     display: none;
 }
+
+.dg.main:not(.debug) {
+    display: none;
+ }
+
+ 

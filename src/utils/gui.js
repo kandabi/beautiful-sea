@@ -6,6 +6,14 @@ initThreeDebug(dat);
 
 const gui = new dat.GUI({ width: 340 });
 
+const urlParams = new URLSearchParams(window.location.search);
+export const isDebug = urlParams.has('debug');
+
+if (isDebug) {
+    console.log('gui', gui)
+    gui.domElement.classList.add('debug');
+}
+
 export const createMaterialGui = (scene, sky, water, lamp) => {
     const seaFolder = gui.addFolder('Sea');
 
