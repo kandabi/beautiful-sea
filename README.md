@@ -1,4 +1,4 @@
-# [Threejs ocean](https://threejs-ocean.netlify.app/)
+# [Threejs Ocean](https://threejs-ocean.netlify.app/)
 
 ### Inspired by [Bruno Simon](https://threejs-journey.com/)
 
