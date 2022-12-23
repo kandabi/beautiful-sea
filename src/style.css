@@ -31,7 +31,16 @@ a {
     color: #ea8462;
 }
 
-.watermark-container {
+.ui {
+    transition: opacity 2s ease-in-out;
+    opacity: 0;
+}
+
+.ui.loaded{
+    opacity: 1;
+}
+
+.ui .watermark-container {
     color: #fff;
     position: absolute;
     text-align: center;
@@ -42,7 +51,7 @@ a {
     top: 3%;
 }
 
-.button-container {
+.ui .button-container {
     flex-direction: column;
     position: absolute;
     display: flex;
@@ -52,12 +61,12 @@ a {
     gap: 12px;
 }
 
-#mute-btn {
+.ui #mute-btn {
     cursor: pointer;
 }
 
-#mute-btn:not(.is-muted) > img.mute,
-#mute-btn.is-muted > img.unmute {
+.ui #mute-btn:not(.is-muted) > img.mute,
+.ui #mute-btn.is-muted > img.unmute {
     display: none;
 }
 

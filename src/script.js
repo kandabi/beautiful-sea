@@ -53,4 +53,6 @@ const createApp = () => {
     createMaterialGui(scene, sky, water, lamp);
     createResizeListener(camera, renderer);
     setupAudio(canvas);
+    
+    document.querySelector('.ui').classList.add('loaded')
 };
